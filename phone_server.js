@@ -299,7 +299,7 @@ Accounts.setPhonePassword = function (userId, newPlaintextPassword) {
  * @param {String} userId The id of the user to send email to.
  * @param {String} [phone] Optional. Which phone of the user's to send the SMS to. This phone must be in the user's `phones` list. Defaults to the first unverified phone in the list.
  */
-Accounts.sendPhoneVerificationCode = function (userId, phone) {
+Accounts.sendPhoneVerificationCode = function (userId, phone, context) {
     // XXX Also generate a link using which someone can delete this
     // account if they own said number but weren't those who created
     // this account.
@@ -360,7 +360,7 @@ Accounts.sendPhoneVerificationCode = function (userId, phone) {
     var options = {
         to  : phone,
         from: SMS.phoneTemplates.from,
-        body: SMS.phoneTemplates.text(user, verifyObject.code)
+        body: SMS.phoneTemplates.text(user, verifyObject.code, context)
     };
 
     try {

@@ -83,8 +83,8 @@ SMS.send = function (options) {
 
 SMS.phoneTemplates = {
     from: '+972545999999',
-    text: function (user, code) {
-        return 'Welcome your invitation code is: ' + code;
+    text: function (user, code, context) {
+        return 'Welcome your invitation code is: ' + code + ' ' + context;
     }
 };
 
