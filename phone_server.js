@@ -548,8 +548,6 @@ Meteor.methods({createUserWithPhone: function (options) {
     check(options, Object);
     if (options.phone) {
         check(options.phone, String);
-        // Change phone format to international SMS format
-        options.phone = normalizePhone(options.phone);
     }
 
     return Accounts._loginMethod(
@@ -569,13 +567,6 @@ Meteor.methods({createUserWithPhone: function (options) {
             // instead of sending a verification email with empty userid.
             if (!userId)
                 throw new Error("createUser failed to insert new user");
-
-            // If `Accounts._options.sendPhoneVerificationCodeOnCreation` is set, register
-            // a token to verify the user's primary phone, and send it to
-            // by sms.
-            if (options.phone && Accounts._options.sendPhoneVerificationCodeOnCreation) {
-                Accounts.sendPhoneVerificationCode(userId, options.phone);
-            }
 
             // client gets logged in as the new user afterwards.
             return {userId: userId};
