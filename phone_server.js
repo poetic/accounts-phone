@@ -370,6 +370,29 @@ Accounts.sendPhoneVerificationCode = function (userId, phone, context) {
     }
 };
 
+Meteor.methods({
+  attachCodeToUser: function(userId, phone){
+    var user = Meteor.users.findOne({_id: userId, 'phone.number': phone});
+
+    if (! user) {
+      throw new Error("can't find user");
+    }
+
+    var verifyObject = {
+      code: getRandomCode(Accounts._options.verificationCodeLength),
+      phone: phone,
+      lastRetry: new Date(),
+      numOfRetries: 0,
+    };
+
+    Meteor.users.update({_id: userId}, {$set: {
+      'services.phone.verify': verifyObject
+    }});
+
+    return verifyObject.code;
+  }
+});
+
 // Send SMS with code to user.
 Meteor.methods({requestPhoneVerification: function (phone) {
     if (phone) {
