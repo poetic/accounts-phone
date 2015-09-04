@@ -415,8 +415,6 @@ Meteor.methods({verifyPhone: function (phone, code, newPassword) {
             if (!code) {
                 throw new Meteor.Error(403, "Code is must be provided to method");
             }
-            // Change phone format to international SMS format
-            phone = normalizePhone(phone);
 
             var user = Meteor.users.findOne({
                 "phone.number": phone
