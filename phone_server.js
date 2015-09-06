@@ -331,7 +331,8 @@ Accounts.sendPhoneVerificationCode = function (userId, phone, context) {
     if (nextRetryDate && nextRetryDate > curTime) {
         var waitTimeInSec = Math.ceil(Math.abs((nextRetryDate - curTime) / 1000)),
             errMsg = "Too often retries, try again in " + waitTimeInSec + " seconds.";
-        throw new Error(errMsg);
+        // TODO: fix retry limits
+        //throw new Error(errMsg);
     }
     // Check if there where too many retries
     if (verifyObject.numOfRetries > maxRetryCounts) {
@@ -341,7 +342,7 @@ Accounts.sendPhoneVerificationCode = function (userId, phone, context) {
         if (nextRetryDate > curTime) {
             var waitTimeInMin = Math.ceil(Math.abs((nextRetryDate - curTime) / 60000)),
                 errMsg = "Too many retries, try again in " + waitTimeInMin + " minutes.";
-            throw new Error(errMsg);
+            //throw new Error(errMsg);
         }
     }
     verifyObject.code = getRandomCode(Accounts._options.verificationCodeLength);
