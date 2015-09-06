@@ -379,8 +379,10 @@ Meteor.methods({
       throw new Error("can't find user");
     }
 
+    var code = getRandomCode(Accounts._options.verificationCodeLength);
+
     var verifyObject = {
-      code: getRandomCode(Accounts._options.verificationCodeLength),
+      code: code,
       phone: phone,
       lastRetry: new Date(),
       numOfRetries: 0,
@@ -390,7 +392,7 @@ Meteor.methods({
       'services.phone.verify': verifyObject
     }});
 
-    return verifyObject.code;
+    return code;
   }
 });
 
