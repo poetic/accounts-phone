@@ -1,6 +1,6 @@
 Package.describe({
     name         : 'poetic:accounts-phone',
-    version      : '0.0.4',
+    version      : '0.0.5',
     // Brief, one-line summary of the package.
     summary      : 'A login service based on mobile phone number, For Meteor.',
     // URL to the Git repository containing the source code for this package.
@@ -37,6 +37,7 @@ Package.onUse(function (api) {
 
     api.export('SMS', 'server');
     api.export('SMSTest', 'server', {testOnly: true});
+    api.export('Twilio', 'server');
 });
 
 Package.onTest(function (api) {
